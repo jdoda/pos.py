@@ -1,0 +1,9 @@
+Requires sqlite, sqlobject, pygtk.
+
+DB: /home/guest/pos.db
+
+run: python /home/administrator/workspace/pos/pos.py &
+
+reports: python /home/administrator/workspace/pos/report.py
+
+
