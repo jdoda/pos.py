@@ -3,12 +3,13 @@ import datetime
 import pygtk
 import gobject, gtk, gtk.glade
 
-import db, keyinput
+import config
+import db
+import keyinput
 
 
 ROOT = sys.path[0]
-SCANNER_DEV_PATH = '/dev/input/by-id/usb-Metrologic_Metrologic_Scanner-event-kbd'
-#SCANNER_DEV_PATH = '/dev/input/event3'
+
 
 def format_float(column, cell, model, iter):
     data = model.get_value(iter, 2)
@@ -68,15 +69,6 @@ class Window(object):
             
             self.widgets.box_treeview.append_column(column)
         
-        self.special = {}
-        infile = open(os.path.join(ROOT,'buttons.conf'))
-        line = infile.readline()[:-1]
-        while line:
-            name, upc = line.split(',')
-            self.special[name] = upc
-            line = infile.readline()[:-1]
-        infile.close()
-        
         special_buttons = [
             self.widgets.special_button0,
             self.widgets.special_button1,
@@ -85,10 +77,10 @@ class Window(object):
             self.widgets.special_button4,
         ]
         
-        for i, k in enumerate(self.special.keys()):
+        for i, k in enumerate(config.special_buttons.keys()):
             special_buttons[i].set_label(k)
         
-        self.scanner_device = keyinput.open_keys(SCANNER_DEV_PATH)
+        self.scanner_device = keyinput.open_keys(config.scanner_device_path)
         gobject.io_add_watch(self.scanner_device, gobject.IO_IN, self.on_scanner_device_input)
         
         self.item_list.append(('', 'Total', 0, 0))
@@ -154,8 +146,8 @@ class Window(object):
             if key == 'equal':
                self.add_item(upc)
     
-    def on_special_add_clicked(self,button):
-        upc = self.special[button.get_label()]
+    def on_special_add_clicked(self, button):
+        upc = config.special_buttons[button.get_label()]
         if self.widgets.add_item_radiobutton.get_active():
             self.add_item(upc)
         else:

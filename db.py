@@ -1,7 +1,7 @@
 from sqlobject import *
+import config
 
-
-connection = connectionForURI('sqlite:///home/guest/pos.db')
+connection = connectionForURI(config.database_uri)
 sqlhub.processConnection = connection
 
 
