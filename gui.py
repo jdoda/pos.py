@@ -262,13 +262,14 @@ class Window(object):
     
     def on_scanner_device_input(self, *args):
         upc = self.scanner_device.readline()[:-1]
-        if self.widgets.add_item_radiobutton.get_active():
-            self.add_item(upc)
-        else:
-            self.remove_item(upc)
-        self.widgets.item_entry.grab_focus()
-        self.widgets.window.present()
-        
+        if not self.widgets.item_entry.has_focus():
+            if self.widgets.add_item_radiobutton.get_active():
+                self.add_item(upc)
+            else:
+                self.remove_item(upc)
+            self.widgets.item_entry.grab_focus()
+            self.widgets.window.present()
+            
         # We want the event again, so return True
         return True
     
