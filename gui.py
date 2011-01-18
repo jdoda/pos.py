@@ -1,5 +1,6 @@
 # Copyright 2008 Jonathan Doda
 # Copyright 2008 Andrei Karpathy
+# Copyright 2008 Daniel Lister
 # Copyright 2011 Jonathan Doda
 #
 # This file is part of pos.py.
