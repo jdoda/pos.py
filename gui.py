@@ -282,13 +282,16 @@ class Window(object):
     
     def on_scanner_device_input(self, *args):
         upc = self.scanner_device.readline()[:-1]
-        if not self.widgets.item_entry.has_focus():
+        focus_widget = self.widgets.window.get_focus()
+        if not self.widgets.window.has_toplevel_focus() or
+                not isinstance(focus_widget, gtk.Entry):
             if self.widgets.add_item_radiobutton.get_active():
                 self.add_item(upc)
             else:
                 self.remove_item(upc)
             self.widgets.item_entry.grab_focus()
             self.widgets.window.present()
+            self.widgets.window.set_keep_above(True)
             
         # We want the event again, so return True
         return True
