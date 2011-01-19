@@ -283,8 +283,8 @@ class Window(object):
     def on_scanner_device_input(self, *args):
         upc = self.scanner_device.readline()[:-1]
         focus_widget = self.widgets.window.get_focus()
-        if not self.widgets.window.has_toplevel_focus() or
-                not isinstance(focus_widget, gtk.Entry):
+        if (not self.widgets.window.has_toplevel_focus() or
+                not isinstance(focus_widget, gtk.Entry)):
             if self.widgets.add_item_radiobutton.get_active():
                 self.add_item(upc)
             else:

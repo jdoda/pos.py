@@ -15,7 +15,7 @@
 # along with pos.py.  If not, see <http://www.gnu.org/licenses/>.
 
 #scanner_device_path = '/dev/input/by-id/usb-Metrologic_Metrologic_Scanner-event-kbd'
-scanner_device_path = '/dev/null'
+scanner_device_path = '/dev/event3'
 database_uri = 'sqlite:///home/guest/pos.db'
 special_buttons = {
     'Water'   :'055100300017', 
