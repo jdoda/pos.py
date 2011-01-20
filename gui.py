@@ -183,7 +183,7 @@ class Window(object):
     	    return
         
         if self.widgets.add_item_radiobutton.get_active():
-                self.add_item(upc)
+            self.add_item(upc)
         else:
             self.remove_item(upc)
                     
@@ -288,10 +288,11 @@ class Window(object):
             if event.type == 1 and event.value == 0 and event.char:
                 if event.char == '\n':
                     self.widgets.item_entry.activate()
+                    self.widgets.item_entry.grab_focus()
+                    self.widgets.window.present()
                 else:
                     curtext = self.widgets.item_entry.get_text()
                     self.widgets.item_entry.set_text(curtext + event.char)
-                
         # We want the event again, so return True
         return True
     
