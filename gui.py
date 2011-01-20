@@ -25,7 +25,7 @@ import gobject, gtk, gtk.glade
 
 import config
 import db
-import keyinput
+import evdev
 
 
 ROOT = sys.path[0]
@@ -100,7 +100,7 @@ class Window(object):
         for i, k in enumerate(config.special_buttons.keys()):
             special_buttons[i].set_label(k)
         
-        self.scanner_device = keyinput.open_keys(config.scanner_device_path)
+        self.scanner_device = evdev.Device(config.scanner_device_path)
         gobject.io_add_watch(self.scanner_device, gobject.IO_IN, self.on_scanner_device_input)
         
         self.item_list.append(('', 'Total', 0, 0))
@@ -281,18 +281,17 @@ class Window(object):
         self.widgets.box_UPC_entry.grab_focus()
     
     def on_scanner_device_input(self, *args):
-        upc = self.scanner_device.readline()[:-1]
+        event = self.scanner_device.get_event()
+        
         focus_widget = self.widgets.window.get_focus()
-        if (not self.widgets.window.has_toplevel_focus() or
-                not isinstance(focus_widget, gtk.Entry)):
-            if self.widgets.add_item_radiobutton.get_active():
-                self.add_item(upc)
-            else:
-                self.remove_item(upc)
-            self.widgets.item_entry.grab_focus()
-            self.widgets.window.present()
-            self.widgets.window.set_keep_above(True)
-            
+        if (not self.widgets.window.has_toplevel_focus() or not isinstance(focus_widget, gtk.Entry)):
+            if event.type == 1 and event.value == 0 and event.char:
+                if event.char == '\n':
+                    self.widgets.item_entry.activate()
+                else:
+                    curtext = self.widgets.item_entry.get_text()
+                    self.widgets.item_entry.set_text(curtext + event.char)
+                
         # We want the event again, so return True
         return True
     
