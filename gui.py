@@ -83,7 +83,7 @@ class Window(object):
         for name, upc in config.product_buttons:
             button = gtk.Button(name)
             button.connect('clicked', self.on_product_button_clicked, upc)
-            self.widgets.product_buttonbox.add(button)
+            self.widgets.product_buttonbox.pack_start(button)
             button.show()
         
         self.scanner_device = evdev.Device(config.scanner_device_path)
