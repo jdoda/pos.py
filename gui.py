@@ -72,6 +72,7 @@ class WidgetWrapper(object):
 class Window(object):
     
     def __init__(self):
+        gtk.settings_get_default().set_property("gtk-button-images", True)
         self.widgets = WidgetWrapper(self, os.path.join(ROOT, 'pos.ui'))
 
         price_column = self.widgets.item_treeview.get_column(2)
@@ -80,9 +81,12 @@ class Window(object):
         cost_column = self.widgets.box_treeview.get_column(2)   
         cost_column.set_cell_data_func(cost_column.get_cell_renderers()[0], format_float)
 
-        for name, upc in config.product_buttons:
+        for name, upc, image_path in config.product_buttons:
             button = gtk.Button(name)
             button.connect('clicked', self.on_product_button_clicked, upc)
+            if image_path:
+                image = gtk.image_new_from_file(os.path.join(ROOT, image_path))
+                button.set_image(image)
             self.widgets.product_buttonbox.pack_start(button)
             button.show()
         

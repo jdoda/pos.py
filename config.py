@@ -17,9 +17,9 @@
 scanner_device_path = '/dev/null'
 database_uri = 'sqlite:///tmp/pos.db'
 product_buttons = [
-    ('Water', '055100300017'), 
-    ('Nestea', '839093'), 
-    ('Snickers', '058496814595'),
-    ('Coke', '678290'), 
-    ('Arizona', '613008722579'),
+    ('Water', '055100300017', None), 
+    ('Nestea', '839093', None), 
+    ('Snickers', '058496814595', None),
+    ('Coke', '678290', None), 
+    ('Arizona', '613008722579', None),
 ]
