@@ -1,3 +1,5 @@
+*This project is no longer maintained.* 
+
 Requires sqlite, sqlobject, pygtk.
 
 DB: /home/guest/pos.db
